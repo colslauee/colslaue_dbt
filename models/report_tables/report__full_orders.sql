@@ -1,11 +1,24 @@
-WITH order_totals AS(
-	SELECT
-		order_id
-		,SUM(sale_price) AS total_order_value
+WITH
+	dist_centers AS(
+		SELECT DISTINCT
+			order_id
+			,COUNT(product_distribution_center_id) AS dist_centers_involved
+		FROM {{ source('thelook_ecommerce', 'order_items') }} AS order_items
 
-	FROM {{ source('thelook_ecommerce', 'order_items') }}
-	GROUP BY 1
-)
+		LEFT JOIN {{ source('thelook_ecommerce', 'inventory_items') }} AS inventory_items
+		ON order_items.inventory_item_id = inventory_items.id
+
+		GROUP BY 1
+	)
+	,order_totals AS(
+		SELECT
+			order_id
+			,SUM(sale_price) AS total_order_value
+
+		FROM {{ source('thelook_ecommerce', 'order_items') }} AS order_items
+
+		GROUP BY 1
+	)
 
 SELECT
   orders.order_id AS order_id
@@ -33,6 +46,7 @@ SELECT
   ,orders.delivered_at AS order_delivered_at
   ,orders.num_of_item AS order_num_of_item
   ,ROUND(order_totals.total_order_value, 2) AS total_order_value
+  ,dist_centers.dist_centers_involved AS dist_centers_involved
 
 FROM {{ source('thelook_ecommerce', 'orders') }} AS orders
 
@@ -40,4 +54,7 @@ LEFT JOIN {{ source('thelook_ecommerce', 'users') }} AS users
 ON orders.user_id = users.id
 
 LEFT JOIN order_totals
+USING (order_id)
+
+LEFT JOIN dist_centers
 USING (order_id)

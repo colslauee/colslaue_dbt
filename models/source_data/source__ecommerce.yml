@@ -9,46 +9,46 @@ sources:
           - name: id
             tests:
               - not_null:
-                severity: error
+                  severity: error
 
       - name: events
         columns:
           - name: id
             tests:
               - not_null:
-                severity: error
+                  severity: error
 
       - name: inventory_items
         columns:
           - name: id
             tests:
               - not_null:
-                severity: error
+                  severity: error
 
       - name: order_items
         columns:
           - name: id
             tests:
               - not_null:
-                severity: error
+                  severity: error
 
       - name: orders
         columns:
           - name: order_id
             tests:
               - not_null:
-                severity: error
+                  severity: error
 
       - name: products
         columns:
           - name: id
             tests:
               - not_null:
-                severity: error
+                  severity: error
 
       - name: users
         columns:
           - name: id
             tests:
               - not_null:
-                severity: error
+                  severity: error
