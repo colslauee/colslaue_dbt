@@ -5,15 +5,50 @@ sources:
     database: bigquery-public-data
     tables:
       - name: distribution_centers
+        columns:
+          - name: id
+            tests:
+              - not_null:
+                severity: error
 
       - name: events
+        columns:
+          - name: id
+            tests:
+              - not_null:
+                severity: error
 
       - name: inventory_items
+        columns:
+          - name: id
+            tests:
+              - not_null:
+                severity: error
 
       - name: order_items
+        columns:
+          - name: id
+            tests:
+              - not_null:
+                severity: error
 
       - name: orders
+        columns:
+          - name: order_id
+            tests:
+              - not_null:
+                severity: error
 
       - name: products
+        columns:
+          - name: id
+            tests:
+              - not_null:
+                severity: error
 
       - name: users
+        columns:
+          - name: id
+            tests:
+              - not_null:
+                severity: error

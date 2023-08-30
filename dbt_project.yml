@@ -24,3 +24,6 @@ models:
     source_data:
       +schema: source_data
       +materialized: table
+
+tests:
+  +severity: warn
